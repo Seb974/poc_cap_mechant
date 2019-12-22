@@ -39,6 +39,9 @@
         </section>
     </div>
 
+    {# <!-- jQuery --> #}
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    
     {# <!-- Filtre des articles --> #}
     <script type="text/javascript">
         let categories = document.getElementsByClassName("categories");
@@ -75,7 +78,10 @@
         let cartList = document.getElementById("cartList");
         let totalItems = document.getElementById("itemCount");
         let counter = document.getElementById("count");
+        let validate = document.getElementById("validate");
 
+        validate.hidden = true;
+        validate.addEventListener("click", validateCommand);
         for (let i = 0; i < buttons.length; i++) {
             buttons[i].addEventListener('click', addToCart);
         }
@@ -92,6 +98,7 @@
         function updateBadge(qty) {
             count += qty;
             counter.textContent = count;
+            validate.hidden = count > 0 ? false : true;
             count > 0 ? counter.style.visibility = "visible" : counter.style.visibility = "hidden";
             count > 1 ? totalItems.textContent = count + " articles" : totalItems.textContent = count + " article";
         }
@@ -122,6 +129,7 @@
             let input = document.createElement("input");
             let button = document.createElement("button");
             let trash = document.createElement("i");
+            input.setAttribute("class", "items");
             input.setAttribute("id", "itemQty-" + parseInt(event.target.id));
             input.setAttribute("type","number");
             input.setAttribute("defaultValue", qty);
@@ -156,6 +164,29 @@
             let newQty = parseInt(event.target.value);
             updateBadge(newQty - initialQty);
             event.target.defaultValue = event.target.value;
+        }
+
+        function validateCommand(event) {
+            event.preventDefault();
+            let items = document.getElementsByClassName("items");
+            for (let i = 0; i < items.length; i++) {
+                let itemId = parseInt(items[i].id.substring(8));
+                cartItem = {
+                    article: itemId,
+                    quantity: parseInt(items[i].value),
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/cart/item/new',
+                    headers: {
+                        'Content-Type':'application/json',
+                    },
+                    data: JSON.stringify(cartItem),
+                }).done(function() { 
+                    //$.ajax( {type: 'GET', url: '/cart/item/'} );
+                    document.location.href='/cart/item/'
+                });
+            }
         }
     </script>
 {% endblock %}
