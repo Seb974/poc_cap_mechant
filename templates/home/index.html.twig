@@ -17,11 +17,11 @@
         <section class="p-t-30">
             <div class="container">
                     {% for article in articles %}
-                        <div class="row">
+                        <div class="row articles cat-{{ article.category.id }}">
                             <div class="card col-12">
                                 <div class="card-body">
                                     <div class="card-title col-4" >
-                                        <h5><a href="{{ path('article_show', { id: article.id }) }}"><span id="name-{{ article.id }}"><strong>{{ article.category.name }}</strong> - {{ article.name }}</span></a></h5>
+                                        <h5><a href="{{ path('article_show', { id: article.id }) }}"><span id="name-{{ article.id }}" class="names"><strong>{{ article.category.name }}</strong> - {{ article.name }}</span></a></h5>
                                     </div>
                                     <div class="card-text col-8">
                                         <form>
@@ -39,6 +39,36 @@
         </section>
     </div>
 
+    {# <!-- Filtre des articles --> #}
+    <script type="text/javascript">
+        let categories = document.getElementsByClassName("categories");
+        let articles = document.getElementsByClassName("articles");
+        let names = document.getElementsByClassName("names");
+        for (let i = 0; i < categories.length; i++) {
+            categories[i].addEventListener("click", filterArticles);
+        }
+
+        function filterArticles(event) {
+            event.preventDefault();
+            selectedCategory = event.target.id;
+            catId = parseInt(selectedCategory.substring(9));
+            selectedArticles = document.getElementsByClassName("cat-" + catId);
+            if (catId === -1) {
+                for (let i = 0; i < articles.length; i++) {
+                    articles[i].hidden = false;
+                }
+            } else {
+                for (let i = 0; i < articles.length; i++) {
+                    articles[i].hidden = true;
+                }
+                for (let j = 0; j < selectedArticles.length; j++) {
+                    selectedArticles[j].hidden = false;
+                }
+            }
+        }
+    </script>
+
+    {#<!-- Gestion du panier -->#}
     <script type="text/javascript">
         let count = 0;
         let buttons = document.getElementsByClassName("submitButton");
@@ -79,7 +109,6 @@
             let newArticle = document.createElement("li");
             let newDescription = document.createElement("p");
             let newForm = createForm(event, qty);
-            //newArticle.setAttribute("class", "d-flex flex-row ml-auto");
             newArticle.setAttribute("id", "cartItem-" + parseInt(event.target.id));
             newDescription.setAttribute("class", "d-flex flex-row ml-auto");
             newDescription.textContent = description;
