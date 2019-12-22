@@ -2,9 +2,38 @@
     <div class="container">
         <div class="navbar-backdrop">
             <div class="navbar">
-                <a href="{{ path('home') }}" class="logo"> Cap Méchant
-                    <!-- <img src="{{ asset('uploads/logos/clikEat.png') }}" alt="Clik Eat Logo" height="50px"> -->
-                </a>
+                <div class="toleft">
+                    <nav class="nav">
+                        <ul>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown">
+                                    <img src="" alt="">
+                                    <span>
+                                        Catégorie <i class="fas fa-filter"></i>
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-left">
+                                    <!-- <ul> -->
+                                        {{ render(controller('App\\Controller\\CategoryController::categoryList')) }}
+                                        <a class="dropdown-item" href="#" id="category--1">Tous</a>
+                                    <!-- </ul> -->
+                                        <!-- {#<a class="dropdown-item" href="{{ path('user_index') }}">
+                                            <i class="fas fa-users"></i>Users</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ path('article_index') }}">
+                                            <i class="fas fa-utensils"></i>Articles</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ path('category_index') }}">
+                                            <i class="fas fa-columns"></i>Catégories</a>
+                                        <div class="dropdown-divider"></div> #}-->
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- {#<a href="{{ path('home') }}" class="logo"> Cap Méchant
+                    <img src="{{ asset('uploads/logos/clikEat.png') }}" alt="Clik Eat Logo" height="50px">
+                </a> #}-->
                 <div class="toright">
                     <nav class="nav">
                         {% if app.user %}
@@ -17,10 +46,6 @@
                                         </span>
                                     </a>
                                    <div class="dropdown-menu dropdown-menu-right">
-                                       {# <!-- < <a class="dropdown-item" href="{{ path('user_self_show') }}">
-                                            <i class="fas fa-user"></i>Mon profil
-                                        </a> --> #}
-                                        <!-- <div class="dropdown-divider"></div> -->
                                         {% if is_granted('ROLE_ADMIN') %}
                                             <a class="dropdown-item" href="{{ path('user_index') }}">
                                                 <i class="fas fa-users"></i>Users</a>
@@ -55,17 +80,6 @@
                                         Panier</h5>
                                     <div class="dropdown-block">
                                         <ul class="dropdown-list" id="cartList">
-                                            <!-- {# {% for item in cart %}
-                                                <li class="d-flex flex-row ml-auto">
-                                                    <a href="#" class="d-flex flex-row ml-auto">
-                                                        x{{ item.quantity }} {{ item.product.product.name }} {{ item.product.name }} | {{ item.product.price }}€
-                                                    </a>
-                                                    <form method="post" action="{{ path( 'cart_item_delete', { 'id': item.product.id } ) }}">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <button class="btn btn-link"><i class="fa fa-trash"></i></button>
-                                                    </form>
-                                                </li>
-                                            {% endfor %} #} --> 
                                         </ul>
                                         <div class="d-flex border-bottom mb-2 px-3 py-2">Total:
                                             <span class="ml-auto font-weight-bold text-success" id="itemCount">0 article</span>

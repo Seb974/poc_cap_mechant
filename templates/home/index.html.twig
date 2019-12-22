@@ -17,30 +17,121 @@
         <section class="p-t-30">
             <div class="container">
                     {% for article in articles %}
-                <div class="row">
-                    <div class="card col-12">
-                        {# <img src="..." class="card-img-top" alt="..."> #}
-                        <div class="card-body">
-                            <div class="card-title col-4" >
-                                <h5><a href="{{ path('article_show', { id: article.id }) }}"><strong>{{ article.category.name }}</strong> - {{ article.name }}</a></h5>
+                        <div class="row">
+                            <div class="card col-12">
+                                <div class="card-body">
+                                    <div class="card-title col-4" >
+                                        <h5><a href="{{ path('article_show', { id: article.id }) }}"><span id="name-{{ article.id }}"><strong>{{ article.category.name }}</strong> - {{ article.name }}</span></a></h5>
+                                    </div>
+                                    <div class="card-text col-8">
+                                        <form>
+                                            <input class="inputQty" id="input-{{ article.id }}" type="number" value="1" min="1"/>
+                                            <button type="submit" class="btn btn-primary btn-sm submitButton" style="width:140px" id="{{ article.id }}">
+                                                <i class="fas fa-shopping-cart"></i> Ajouter
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-text col-8">
-                                <form>
-                                    {# <i class="fas fa-shopping-cart"></i> #}
-                                    <input id="{{ article.id }}" type="number" value="1"/>
-                                    <button type="submit" class="btn btn-primary btn-sm" style="width:140px">
-                                        <i class="fas fa-shopping-cart"></i> Ajouter
-                                    </button>
-                                </form>
-                            </div>
-                            {# <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> #}
                         </div>
-                    </div>
-                </div>
                     {% endfor %}
             </div>
         </section>
     </div>
 
+    <script type="text/javascript">
+        let count = 0;
+        let buttons = document.getElementsByClassName("submitButton");
+        let cartList = document.getElementById("cartList");
+        let totalItems = document.getElementById("itemCount");
+        let counter = document.getElementById("count");
 
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', addToCart);
+        }
+
+        function addToCart(event) {
+            event.preventDefault();
+            let qty = document.getElementById("input-" + parseInt(event.target.id));
+            let inputItem = document.getElementById("itemQty-" + parseInt(event.target.id));
+            updateBadge(parseInt(qty.value));
+            inputItem === null ? addArticleToList(event, parseInt(qty.value)) : addToItem(inputItem.id, parseInt(qty.value));
+            qty.value = 1;
+        }
+
+        function updateBadge(qty) {
+            count += qty;
+            counter.textContent = count;
+            count > 0 ? counter.style.visibility = "visible" : counter.style.visibility = "hidden";
+            count > 1 ? totalItems.textContent = count + " articles" : totalItems.textContent = count + " article";
+        }
+
+        function addToItem(inputId, qty) {
+            let inputToUpdate = document.getElementById(inputId);
+            let initialValue = parseInt(inputToUpdate.value);
+            inputToUpdate.value = initialValue + qty;
+            inputToUpdate.defaultValue = initialValue + qty;
+        }
+
+        function addArticleToList(event, qty) {
+            let cartList = document.getElementById("cartList");
+            let description = document.getElementById("name-" + parseInt(event.target.id)).textContent;
+            let newArticle = document.createElement("li");
+            let newDescription = document.createElement("p");
+            let newForm = createForm(event, qty);
+            //newArticle.setAttribute("class", "d-flex flex-row ml-auto");
+            newArticle.setAttribute("id", "cartItem-" + parseInt(event.target.id));
+            newDescription.setAttribute("class", "d-flex flex-row ml-auto");
+            newDescription.textContent = description;
+            newArticle.append(newDescription);
+            newArticle.append(newForm);
+            cartList.append(newArticle);
+        }
+
+        function createForm(event, qty) {
+            let div = document.createElement("div");
+            let input = document.createElement("input");
+            let button = document.createElement("button");
+            let trash = document.createElement("i");
+            input.setAttribute("id", "itemQty-" + parseInt(event.target.id));
+            input.setAttribute("type","number");
+            input.setAttribute("defaultValue", qty);
+            input.setAttribute("value", qty);
+            input.setAttribute("min", "1");
+            input.addEventListener("change", updateQty)
+            button.setAttribute("class", "btn btn-link");
+            button.setAttribute("id", "throw-" + event.target.id)
+            button.addEventListener("click", deleteArticle);
+            trash.setAttribute("class", "fa fa-trash");
+            trash.setAttribute("id","trash-" + event.target.id)
+            trash.addEventListener("click", deleteArticle);
+            button.append(trash);
+            div.append(input);
+            div.append(button);
+            div.append(document.createElement("hr"));
+            return div;
+        }
+
+        function deleteArticle(event) {
+            event.preventDefault();
+            let articleId = parseInt(event.target.id.substring(6));
+            let articleQty = document.getElementById("itemQty-" + articleId);
+            let article = document.getElementById("cartItem-" + articleId);
+            article.remove();
+            updateBadge(-parseInt(articleQty.value));
+        }
+
+        function updateQty(event) {
+            event.preventDefault();
+            let initialQty = parseInt(event.target.defaultValue);
+            let newQty = parseInt(event.target.value);
+            updateBadge(newQty - initialQty);
+            event.target.defaultValue = event.target.value;
+        }
+    </script>
 {% endblock %}
+
+{% block js %}
+{% endblock %}
+
+
