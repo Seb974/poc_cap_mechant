@@ -2,35 +2,37 @@
     <div class="container">
         <div class="navbar-backdrop">
             <div class="navbar">
-                <div class="toleft">
-                    <nav class="nav">
-                        <ul>
-                            <li class="dropdown">
-                                <a href="#" data-toggle="dropdown">
-                                    <img src="" alt="">
-                                    <span>
-                                        Catégorie <i class="fas fa-filter"></i>
-                                    </span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-left">
-                                    <!-- <ul> -->
-                                        {{ render(controller('App\\Controller\\CategoryController::categoryList')) }}
-                                        <a class="dropdown-item" href="#" id="category--1">Tous</a>
-                                    <!-- </ul> -->
-                                        <!-- {#<a class="dropdown-item" href="{{ path('user_index') }}">
-                                            <i class="fas fa-users"></i>Users</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ path('article_index') }}">
-                                            <i class="fas fa-utensils"></i>Articles</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ path('category_index') }}">
-                                            <i class="fas fa-columns"></i>Catégories</a>
-                                        <div class="dropdown-divider"></div> #}-->
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                {% if app.user %}
+                    <div class="toleft">
+                        <nav class="nav">
+                            <ul>
+                                <li class="dropdown">
+                                    <a href="#" data-toggle="dropdown">
+                                        <img src="" alt="">
+                                        <span>
+                                            Catégorie <i class="fas fa-filter"></i>
+                                        </span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-left">
+                                        <!-- <ul> -->
+                                            {{ render(controller('App\\Controller\\CategoryController::categoryList')) }}
+                                            <a class="dropdown-item" href="#" id="category--1">Tous</a>
+                                        <!-- </ul> -->
+                                            <!-- {#<a class="dropdown-item" href="{{ path('user_index') }}">
+                                                <i class="fas fa-users"></i>Users</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{{ path('article_index') }}">
+                                                <i class="fas fa-utensils"></i>Articles</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{{ path('category_index') }}">
+                                                <i class="fas fa-columns"></i>Catégories</a>
+                                            <div class="dropdown-divider"></div> #}-->
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                {% endif %}
                 <!-- {#<a href="{{ path('home') }}" class="logo"> Cap Méchant
                     <img src="{{ asset('uploads/logos/clikEat.png') }}" alt="Clik Eat Logo" height="50px">
                 </a> #}-->
