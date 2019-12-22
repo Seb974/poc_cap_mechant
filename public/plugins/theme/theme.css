@@ -200,7 +200,8 @@ img {
   width: 100%;
   height: 62px;
   background: #b5067f;
-  position: relative;
+  position: fixed;
+  top: 0;
   z-index: 999;
 }
 
@@ -670,6 +671,7 @@ img {
 #page-container {
   position: relative;
   min-height: 100vh;
+  margin-top: 6%;
 }
 
 #content-wrap {
