@@ -23,12 +23,12 @@ class CartItemController extends AbstractController
     public function index(CartItemRepository $cartItemRepository): Response
     {
         return $this->render('cart_item/index.html.twig', [
-            'cart_items' => $cartItemRepository->findBy(['client' => $this->getUser(), 'status' => "To send"])
+            'cart_items' => $cartItemRepository->findBy(['client' => $this->getUser(), 'status' => "To validate"])
         ]);
     }
 
     /**
-     * @Route("/new", name="cart_item_new", methods={"GET","POST"})
+     * @Route("/new", name="cart_item_new", methods={"POST"})
      */
     public function new(Request $request, ArticleRepository $articleRepository): Response
     {
@@ -43,10 +43,32 @@ class CartItemController extends AbstractController
         $cartItem->setArticle($article);
         $cartItem->setQuantity($quantity);
         $cartItem->setClient($this->getUser());
-        $cartItem->setStatus("To send");
+        $cartItem->setStatus("To validate");
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($cartItem);
         $entityManager->flush();
+
+        return new JsonResponse(['status' => 'OK']);
+    }
+
+    /**
+     * @Route("/{id}/validate", name="cart_item_validate", methods={"POST"})
+     */
+    public function valid(Request $request, CartItem $cartItem): Response
+    {
+        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+            $data = json_decode($request->getContent(), true);
+            $request->request->replace(is_array($data) ? $data : array());
+        }
+        $quantity = $request->request->get('quantity');
+        $deliveryDate = new \DateTime($request->request->get('delivery'));
+
+        if($cartItem->getQuantity() !== $quantity) {
+            $cartItem->setQuantity($quantity);
+        }
+        $cartItem->setDeliveryDate($deliveryDate);
+        $cartItem->setStatus("Sended");
+        $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse(['status' => 'OK']);
     }

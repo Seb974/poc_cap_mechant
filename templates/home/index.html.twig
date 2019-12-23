@@ -166,9 +166,14 @@
             event.target.defaultValue = event.target.value;
         }
 
-        function validateCommand(event) {
+        async function validateCommand(event) {
             event.preventDefault();
             let items = document.getElementsByClassName("items");
+            await sendItemsToDatabase(items);
+            document.location.href='/cart/item/'
+        }
+
+        async function sendItemsToDatabase(items) {
             for (let i = 0; i < items.length; i++) {
                 let itemId = parseInt(items[i].id.substring(8));
                 cartItem = {
@@ -182,12 +187,9 @@
                         'Content-Type':'application/json',
                     },
                     data: JSON.stringify(cartItem),
-                }).done(function() { 
-                    //$.ajax( {type: 'GET', url: '/cart/item/'} );
-                    document.location.href='/cart/item/'
                 });
             }
-        }
+        } 
     </script>
 {% endblock %}
 

@@ -38,6 +38,11 @@ class CartItem
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $deliveryDate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,18 @@ class CartItem
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getDeliveryDate(): ?\DateTimeInterface
+    {
+        return $this->deliveryDate;
+    }
+
+    public function setDeliveryDate(?\DateTimeInterface $deliveryDate): self
+    {
+        $this->deliveryDate = $deliveryDate;
 
         return $this;
     }
