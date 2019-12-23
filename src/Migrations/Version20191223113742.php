@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191221121433 extends AbstractMigration
+final class Version20191223113742 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -23,8 +23,11 @@ final class Version20191221121433 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE category (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(120) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE cart_item (id INT AUTO_INCREMENT NOT NULL, article_id INT NOT NULL, client_id INT NOT NULL, quantity INT NOT NULL, status VARCHAR(60) NOT NULL, delivery_date DATE DEFAULT NULL, INDEX IDX_F0FE25277294869C (article_id), INDEX IDX_F0FE252719EB6921 (client_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, code_client VARCHAR(20) NOT NULL, UNIQUE INDEX UNIQ_8D93D649B8C25CF7 (code_client), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE article (id INT AUTO_INCREMENT NOT NULL, category_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, INDEX IDX_23A0E6612469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE cart_item ADD CONSTRAINT FK_F0FE25277294869C FOREIGN KEY (article_id) REFERENCES article (id)');
+        $this->addSql('ALTER TABLE cart_item ADD CONSTRAINT FK_F0FE252719EB6921 FOREIGN KEY (client_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE article ADD CONSTRAINT FK_23A0E6612469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
     }
 
@@ -34,7 +37,10 @@ final class Version20191221121433 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE article DROP FOREIGN KEY FK_23A0E6612469DE2');
+        $this->addSql('ALTER TABLE cart_item DROP FOREIGN KEY FK_F0FE252719EB6921');
+        $this->addSql('ALTER TABLE cart_item DROP FOREIGN KEY FK_F0FE25277294869C');
         $this->addSql('DROP TABLE category');
+        $this->addSql('DROP TABLE cart_item');
         $this->addSql('DROP TABLE user');
         $this->addSql('DROP TABLE article');
     }
