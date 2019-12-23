@@ -30,12 +30,13 @@
         </thead>
         <tbody>
         {% for cart_item in cart_items %}
-            <tr>
+            <tr id="item-{{ cart_item.id }}">
                 <td>{{ cart_item.article.category.name }}</td>
                 <td>{{ cart_item.article.name }}</td>
                 <td><input type="number" class="quantities" id="item-{{ cart_item.id }}" value="{{ cart_item.quantity }}" /></td>
                 <td>
-                    <a href="{{ path('cart_item_delete', {'id': cart_item.id}) }}">Supprimer</a>
+                    <a href="#" class="deleteButtons" id="delete-{{ cart_item.id }}">Supprimer</a>
+                    {# {{ include('cart_item/_delete_form.html.twig') }} #}
                 </td>
             </tr>
         {% else %}
@@ -83,6 +84,7 @@
             });
 
             $("button#validate").click(validate);
+            $(".deleteButtons").click(deleteItem);
 
             async function validate(event) {
                 await sendItemsToDatabase($(".quantities"));
@@ -94,7 +96,8 @@
                     let id = parseInt(items[i].id.substring(5));
                     cartItem = {
                         quantity: parseInt(items[i].value),
-                        delivery: $("#selectedDate")[0].value
+                        delivery: $("#selectedDate")[0].value,
+                        isDeleted: $("#item-" + id)[0].hidden,
                     }
                     $.ajax({
                         type: 'POST',
@@ -105,7 +108,12 @@
                         data: JSON.stringify(cartItem),
                     })
                 }
-            } 
+            }
+
+            function deleteItem(event) {
+                id = parseInt(event.target.id.substring(7));
+                $("#item-" + id)[0].hidden = true;
+            }
         });
 
     </script>

@@ -62,12 +62,15 @@ class CartItemController extends AbstractController
         }
         $quantity = $request->request->get('quantity');
         $deliveryDate = new \DateTime($request->request->get('delivery'));
-
-        if($cartItem->getQuantity() !== $quantity) {
-            $cartItem->setQuantity($quantity);
+        if (!$request->request->get('isDeleted')) {
+            if($cartItem->getQuantity() !== $quantity) {
+                $cartItem->setQuantity($quantity);
+            }
+            $cartItem->setDeliveryDate($deliveryDate);
+            $cartItem->setStatus("Sended");
+        } else {
+            $cartItem->setStatus("Aborted");
         }
-        $cartItem->setDeliveryDate($deliveryDate);
-        $cartItem->setStatus("Sended");
         $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse(['status' => 'OK']);
