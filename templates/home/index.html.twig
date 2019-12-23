@@ -36,6 +36,11 @@
                         </div>
                     {% endfor %}
             </div>
+            <div class="container">
+                <button type="submit" class="btn btn-primary btn-sm" style="width:140px" id="submitButton">
+                    <i class="fas fa-shopping-cart"></i> Ajouter
+                </button>
+            </div>
         </section>
     </div>
 
@@ -74,7 +79,7 @@
     {#<!-- Gestion du panier -->#}
     <script type="text/javascript">
         let count = 0;
-        //let buttons = document.getElementsByClassName("submitButton");
+        let button = document.getElementById("submitButton");
         let inputs = document.getElementsByClassName("inputQty");
         let cartList = document.getElementById("cartList");
         let totalItems = document.getElementById("itemCount");
@@ -84,11 +89,27 @@
         validate.hidden = true;
         validate.addEventListener("click", validateCommand);
 
-        for (let i = 0; i < inputs.length; i++) {
+        /*for (let i = 0; i < inputs.length; i++) {
             inputs[i].addEventListener('focusout', addToCart);
-        }
+        }*/
+
+        button.addEventListener("click", addToCart);
 
         function addToCart(event) {
+            event.preventDefault();
+            for (let i = 0; i < inputs.length; i++) {
+                let qty = parseInt(inputs[i].value);
+                if (qty > 0) {
+                    let id = parseInt(inputs[i].id.substring(6));
+                    let inputItem = document.getElementById("itemQty-" + id);
+                    updateBadge(qty);
+                    inputItem === null ? addArticleToList(id, qty) : addToItem(inputItem.id, qty);
+                    inputs[i].value = 0;
+                }
+            }
+        }
+
+        /*function addToCart(event) {
             event.preventDefault();
             let qty = parseInt(event.target.value);
             if (qty > 0) {
@@ -98,7 +119,7 @@
                 inputItem === null ? addArticleToList(id, qty) : addToItem(inputItem.id, qty);
                 event.target.value = 0;
             }
-        }
+        }*/
 
         function updateBadge(qty) {
             count += qty;
