@@ -199,7 +199,7 @@ img {
 #header {
   width: 100%;
   height: 62px;
-  background: #b5067f;
+  background:  #222222;  /* #b5067f */
   position: fixed;
   top: 0;
   z-index: 999;
@@ -276,7 +276,7 @@ img {
 
 #header .nav > ul > li > a,
 #header .nav > ul > li > a {
-  color: #FFD710;
+  color: #7EC241; /*#F7901E*/ /*#FFD710*/
   font-size: 15px;
   font-weight: 500;
   padding: 0 10px;
@@ -596,11 +596,11 @@ img {
 }
 
 #header .navbar-backdrop {
-  background-color: #b5067f;
+  background-color: #222222;  /* #b5067f */
 }
 
 .navbar-search {
-  background-color: #b5067f;
+  background-color: #222222;  /* #b5067f */
   padding: 5px 15px 15px 15px;
   position: absolute;
   width: 100%;
@@ -659,7 +659,7 @@ img {
 }
 
 #footer {
-  background-color: #B5067F;
+  background-color: #222222;  /* #b5067f */
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.4);
   padding: 65px 0 20px 0;
@@ -1715,8 +1715,8 @@ section.error-404 form {
 
 .btn-primary {
   color: #fff;
-  background-color: #B5067F;
-  border-color: #B5067F;
+  background-color: #E71B23; /*#B5067F*/
+  border-color: #E71B23; /*#B5067F*/
 }
 
 .btn-primary:focus, .btn-primary:hover,
@@ -1724,8 +1724,8 @@ section.error-404 form {
 .show > .btn-primary.dropdown-toggle:hover,
 .show > .btn-primary.dropdown-toggle:focus {
   color: #fff;
-  background-color: #FFD710;
-  border-color: #FFD710;
+  background-color: #F7901E; /*#FFD710 #F7901E*/
+  border-color: #F7901E; /*#FFD710 #F7901E*/
   outline: 0;
 }
 
