@@ -24,12 +24,12 @@
                                         <h5><a href="{{ path('article_show', { id: article.id }) }}"><span id="name-{{ article.id }}" class="names"><strong>{{ article.category.name }}</strong> - {{ article.name }}</span></a></h5>
                                     </div>
                                     <div class="card-text col-8">
-                                        <form>
-                                            <input class="inputQty" id="input-{{ article.id }}" type="number" value="1" min="1"/>
-                                            <button type="submit" class="btn btn-primary btn-sm submitButton" style="width:140px" id="{{ article.id }}">
-                                                <i class="fas fa-shopping-cart"></i> Ajouter
-                                            </button>
-                                        </form>
+                                        {# <form> #}
+                                            <input class="inputQty" id="input-{{ article.id }}" type="number" value="0" min="0"/>
+                                            {# <button type="submit" class="btn btn-primary btn-sm submitButton" style="width:140px" id="{{ article.id }}"> #}
+                                                {# <i class="fas fa-shopping-cart"></i> Ajouter #}
+                                            {# </button> #}
+                                        {# </form> #}
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +74,8 @@
     {#<!-- Gestion du panier -->#}
     <script type="text/javascript">
         let count = 0;
-        let buttons = document.getElementsByClassName("submitButton");
+        //let buttons = document.getElementsByClassName("submitButton");
+        let inputs = document.getElementsByClassName("inputQty");
         let cartList = document.getElementById("cartList");
         let totalItems = document.getElementById("itemCount");
         let counter = document.getElementById("count");
@@ -82,17 +83,21 @@
 
         validate.hidden = true;
         validate.addEventListener("click", validateCommand);
-        for (let i = 0; i < buttons.length; i++) {
-            buttons[i].addEventListener('click', addToCart);
+
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener('focusout', addToCart);
         }
 
         function addToCart(event) {
             event.preventDefault();
-            let qty = document.getElementById("input-" + parseInt(event.target.id));
-            let inputItem = document.getElementById("itemQty-" + parseInt(event.target.id));
-            updateBadge(parseInt(qty.value));
-            inputItem === null ? addArticleToList(event, parseInt(qty.value)) : addToItem(inputItem.id, parseInt(qty.value));
-            qty.value = 1;
+            let qty = parseInt(event.target.value);
+            if (qty > 0) {
+                let id = parseInt(event.target.id.substring(6));
+                let inputItem = document.getElementById("itemQty-" + id);
+                updateBadge(qty);
+                inputItem === null ? addArticleToList(id, qty) : addToItem(inputItem.id, qty);
+                event.target.value = 0;
+            }
         }
 
         function updateBadge(qty) {
@@ -110,13 +115,13 @@
             inputToUpdate.defaultValue = initialValue + qty;
         }
 
-        function addArticleToList(event, qty) {
+        function addArticleToList(id, qty) {
             let cartList = document.getElementById("cartList");
-            let description = document.getElementById("name-" + parseInt(event.target.id)).textContent;
+            let description = document.getElementById("name-" + id).textContent;
             let newArticle = document.createElement("li");
             let newDescription = document.createElement("p");
-            let newForm = createForm(event, qty);
-            newArticle.setAttribute("id", "cartItem-" + parseInt(event.target.id));
+            let newForm = createForm(id, qty);
+            newArticle.setAttribute("id", "cartItem-" + id);
             newDescription.setAttribute("class", "d-flex flex-row ml-auto");
             newDescription.textContent = description;
             newArticle.append(newDescription);
@@ -124,23 +129,23 @@
             cartList.append(newArticle);
         }
 
-        function createForm(event, qty) {
+        function createForm(id, qty) {
             let div = document.createElement("div");
             let input = document.createElement("input");
             let button = document.createElement("button");
             let trash = document.createElement("i");
             input.setAttribute("class", "items");
-            input.setAttribute("id", "itemQty-" + parseInt(event.target.id));
+            input.setAttribute("id", "itemQty-" + id);
             input.setAttribute("type","number");
             input.setAttribute("defaultValue", qty);
             input.setAttribute("value", qty);
             input.setAttribute("min", "1");
             input.addEventListener("change", updateQty)
             button.setAttribute("class", "btn btn-link");
-            button.setAttribute("id", "throw-" + event.target.id)
+            button.setAttribute("id", "throw-" + id)
             button.addEventListener("click", deleteArticle);
             trash.setAttribute("class", "fa fa-trash");
-            trash.setAttribute("id","trash-" + event.target.id)
+            trash.setAttribute("id","trash-" + id)
             trash.addEventListener("click", deleteArticle);
             button.append(trash);
             div.append(input);
