@@ -4532,7 +4532,7 @@ input[type="file"] {
 }
 
 .card {
-  background-color: #fff;
+  background-color: #FAFAFA; /*#fff;*/
   border: 1px solid #dedede;
   -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.07);
           box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.07);
