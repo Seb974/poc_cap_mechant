@@ -3995,7 +3995,7 @@ input[type="file"] {
 }
 
 .badge-cart {
-  background-color: #222222;
+  background-color: #E71B23; /* #222222; */
 }
 
 .badge-xbox-one,
