@@ -64,6 +64,34 @@ table.dataTable thead .sorting_desc_disabled:before {
 	
 }
 
+.scrollable-menu {
+	height: auto;
+	max-height: 200px;
+	overflow-x: hidden;
+  }
+  
+  .card-article {
+	background-color: rgba(0, 0, 0, 0.03)!important;
+	/*max-width: 50%;
+	padding: 2%;*/
+  }
+
+  .cat-accordion {
+	  width: 94%;
+	  margin: auto;
+  }
+  
+  #submitButton {
+	width: 140px;
+	margin: auto;
+  }
+  
+  .inputQty {
+	width: 5em;
+	text-align: right;
+  }
+  
+
 @media screen and (max-height: 450px) {
 	.sidenav {
 		padding-top: 15px;

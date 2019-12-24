@@ -17,7 +17,7 @@
         <section class="p-t-30">
             <div class="accordion" id="accordionExample">
                 {% for category in categories %}
-                    <div class="card">
+                    <div class="card cat-accordion">
                         <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
                                 <button class="btn btn-link catTitle" type="button" data-toggle="collapse" data-target="#cat-{{ category.id }}" aria-expanded="true" aria-controls="cat-{{ category.id }}" data-parent="#accordionExample">
@@ -28,24 +28,24 @@
                         <div id="cat-{{ category.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div class="card-body">
                                 <div class="container">
-                                {% for article in articles %}
-                                    {% if article.category == category %}
-                                        <div class="row articles cat-{{ article.category.id }}">
-                                        {# <div v-for='(item,indice) in articles' :key='indice' class="row"> #}
-                                            <div class="card col-sm-6">
-                                                <div class="card-body">
-                                                    <div class="card-title col-4" >
-                                                        <h5><a href="{{ path('article_show', { id: article.id }) }}"><span id="name-{{ article.id }}" class="names"><strong>{{ article.category.name }}</strong> - {{ article.name }}</span></a></h5>
-                                                    </div>
-                                                    <div class="card-text col-8">
-                                                        <input class="inputQty" id="input-{{ article.id }}" type="number" value="0" min="0"/>
+                                    <div class="row row-cols-2 row-cols-sm-1 row-cols-md-1">  {# row-cols-sm-2 row-cols-md-2"> #}
+                                    {% for key, article in articles %}
+                                        {% if article.category == category %}
+                                                <div class="col-12 col-sm-6 col-md-6 articles cat-{{ article.category.id }}">
+                                                    <div class="card card-lg card-article">
+                                                        <div class="card-body">
+                                                            <div class="card-title col-10" >
+                                                                <h5><a href="{{ path('article_show', { id: article.id }) }}"><span id="name-{{ article.id }}" class="names">{{ article.name }}</span></a></h5>
+                                                            </div>
+                                                            <div class="card-text col-2">
+                                                                <input class="inputQty" id="input-{{ article.id }}" type="number" value="0" min="0"/>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        {# </div> #}
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
             </div>
          
             <div class="container">
-                <button type="submit" class="btn btn-primary btn-sm" style="width:140px" id="submitButton">
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton">
                     <i class="fas fa-shopping-cart"></i> Ajouter
                 </button>
             </div>
