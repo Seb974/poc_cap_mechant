@@ -81,12 +81,12 @@ table.dataTable thead .sorting_desc_disabled:before {
 	  margin: auto;
   }
   
-  #submitButton {
+  #submitButton, button#validate {
 	width: 140px;
 	margin: auto;
   }
   
-  .inputQty {
+  .inputQty, input.quantities {
 	width: 5em;
 	text-align: right;
   }
@@ -103,7 +103,20 @@ table.dataTable thead .sorting_desc_disabled:before {
 	  width: 100%;
 	  text-align: left;
   }
-  
+
+  .navbar {
+	  margin-right: 3%!important;
+  }
+
+  #final-title {
+	  widows: 50%;
+	  margin: auto;
+  }
+
+  div.flatpickr, .table, .alert-success {
+	width: 94%;
+	margin: auto;
+  }
 
 @media screen and (max-height: 450px) {
 	.sidenav {

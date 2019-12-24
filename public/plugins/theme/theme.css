@@ -10148,7 +10148,7 @@ figure {
   #header .logo,
   #header .navbar,
   #header {
-    height: 50px;
+    height: 50px;   /*header-height initial = 50px*/
   }
   #header .nav > ul > li > a {
     line-height: 50px;
@@ -10156,9 +10156,9 @@ figure {
   .navbar-search-open .navbar-search {
     top: 50px;
   }
-  #header .logo {
-    padding: 12px 0;
-  }
+  /* #header .logo {
+    padding: 6px 0;
+  } */
   #header .nav > ul > li > a > .badge {
     top: 5px;
   }
@@ -10309,7 +10309,9 @@ figure {
     right: 0;
     display: inline-block;
     padding-left: 5px;
+    padding-top: 12px;
   }
+
   #header .logo img {
     height: 30px;
   }
