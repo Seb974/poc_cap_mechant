@@ -2,29 +2,9 @@
     <div class="container">
         <div class="navbar-backdrop">
             <div class="navbar">
-                <!-- {# {% if app.user %}
-                    <div class="toleft">
-                        <nav class="nav">
-                            <ul>
-                                <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown">
-                                        <img src="" alt="">
-                                        <span id="categoryFilter">
-                                            Catégorie <i class="fas fa-filter"></i>
-                                        </span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-left">
-                                            {{ render(controller('App\\Controller\\CategoryController::categoryList')) }}
-                                            <a class="dropdown-item categories" href="#" id="category--1">Tous</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                {% endif %} #} -->
-                <!-- {#<a href="{{ path('home') }}" class="logo"> Cap Méchant
-                    <img src="{{ asset('uploads/logos/clikEat.png') }}" alt="Clik Eat Logo" height="50px">
-                </a> #}-->
+                <a href="{{ path('home') }}" class="logo">
+                    <img src="{{ asset('uploads/logo/cap_mechant.png') }}" alt="logo cap mechant" height="50px">
+                </a>
                 <div class="toright">
                     <nav class="nav">
                         {% if app.user %}
@@ -54,11 +34,6 @@
                                         </a>
                                     </div>
                                 </li>
-                                <!--{# <li>
-                                    <a href="{{ path('home') }}">
-                                        <i class="fas fa-home"></i>
-                                    </a>
-                                </li> #}-->
                             </li>
                             <li class="dropdown dropdown-notification">
                                 <a href="#" data-toggle="dropdown">
@@ -76,18 +51,11 @@
                                             <span class="ml-auto font-weight-bold text-success" id="itemCount">0 article</span>
                                         </div>
                                         <div class="d-flex px-3">
-                                            <!--{# <a class="btn btn-outline btn-sm" href="{{ path('get_cart') }}">Editer quantité</a> #}-->
                                             <a class="btn btn-success btn-sm ml-auto" href="#" id="validate">Valider</a>
                                         </div>
                                     </div>
                                 </div>
                             </li>
-
-                            {# <!-- <li>
-                                <a data-toggle="search">
-                                    <i class="fas fa-search"></i>
-                                </a>
-                            </li> --> #}
                         </ul>
                     {% else %}
                         <ul>
@@ -97,27 +65,9 @@
                             <li>
                                 <a href="{{ path('app_register') }}">S'enregistrer</a>
                             </li>
-                            {# <!--<li>
-                                <a href="{{ path('home') }}">
-                                    <i class="fas fa-home"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a data-toggle="search">
-                                    <i class="fas fa-search"></i>
-                                </a>
-                            </li> -->#}
                         </ul>
                     {% endif %}
                 </nav>
-            </div>
-        </div>
-        <div class="navbar-search">
-            <div class="container">
-                <form method="post">
-                    <input type="text" class="form-control" placeholder="Rechercher...">
-                    <i class="fas fa-times close"></i>
-                </form>
             </div>
         </div>
     </div>

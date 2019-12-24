@@ -199,7 +199,7 @@ img {
 #header {
   width: 100%;
   height: 62px;
-  background:  #222222;  /* #b5067f */
+  background:  #000000;  /* #222222 */
   position: fixed;
   top: 0;
   z-index: 999;
@@ -276,7 +276,7 @@ img {
 
 #header .nav > ul > li > a,
 #header .nav > ul > li > a {
-  color: #7EC241; /*#F7901E*/ /*#FFD710*/
+  color: #7EC241; /* vert: #7EC241;*/ /*#F7901E*/ /*#FFD710*/
   font-size: 15px;
   font-weight: 500;
   padding: 0 10px;
@@ -596,11 +596,11 @@ img {
 }
 
 #header .navbar-backdrop {
-  background-color: #222222;  /* #b5067f */
+  background-color: #000000;  /* #222222 */
 }
 
 .navbar-search {
-  background-color: #222222;  /* #b5067f */
+  background-color: #000000;  /* #222222 */
   padding: 5px 15px 15px 15px;
   position: absolute;
   width: 100%;
@@ -659,7 +659,7 @@ img {
 }
 
 #footer {
-  background-color: #222222;  /* #b5067f */
+  background-color: #000000;  /* #222222 */
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.4);
   padding: 65px 0 20px 0;
@@ -1715,8 +1715,8 @@ section.error-404 form {
 
 .btn-primary {
   color: #fff;
-  background-color: #E71B23; /*#B5067F*/
-  border-color: #E71B23; /*#B5067F*/
+  background-color: #EE3021; /*#E71B23;*/
+  border-color: #EE3021; /*#E71B23;*/
 }
 
 .btn-primary:focus, .btn-primary:hover,
@@ -3995,7 +3995,7 @@ input[type="file"] {
 }
 
 .badge-cart {
-  background-color: #E71B23; /* #222222; */
+  background-color: #E71B23; /*#7EC241;*/ /*#E71B23;*/ /* #222222; */
 }
 
 .badge-xbox-one,

@@ -90,6 +90,10 @@ table.dataTable thead .sorting_desc_disabled:before {
 	width: 5em;
 	text-align: right;
   }
+
+  .logo {
+	  
+  }
   
 
 @media screen and (max-height: 450px) {
