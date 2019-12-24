@@ -118,6 +118,31 @@ table.dataTable thead .sorting_desc_disabled:before {
 	margin: auto;
   }
 
+  #login-form-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  #login-form {
+	border: 2px solid #222222;
+	border-radius: 10px;
+	padding: 15px;
+	margin: 20px;
+  }
+
+  #login-submit {
+	background-color: #EE3021; /*#EE3021; #7DBF40;*/
+	border-color: #EE3021; /*#EE3021; #7DBF40;*/
+	width: 50%;
+	margin-left: 25%;
+  }
+
+  #login-title {
+	  width: 60%;
+	  margin-left: 20%;
+  }
+
 @media screen and (max-height: 450px) {
 	.sidenav {
 		padding-top: 15px;

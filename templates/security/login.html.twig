@@ -4,8 +4,9 @@
 
 {% block body %}
     <div class="container">
-        <div class="row">
-            <div class="col-sm-5">
+        <br/>
+        <div class="row" id="login-form-container">
+            <div class="col-sm-5" id="login-form">
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
@@ -17,11 +18,7 @@
                     {% endif %}
                     <form action="{{ path('app_login') }}" method="post">
                         <fieldset>
-                            <legend><i class="fa fa-lock" aria-hidden="true"></i> Connexion sécurisée</legend>
-                            {# <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-                            </div> #}
+                            <legend id="login-title"><i class="fa fa-lock" aria-hidden="true"></i> Connexion sécurisée</legend>
                             <div class="form-group">
                                 <label for="code_client">Code client</label>
                                 <input type="text" value="{{ last_username }}" name="code_client" id="inputCode_client" class="form-control" required autofocus>
@@ -33,18 +30,7 @@
                             <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
-                            {#
-                                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                                See https://symfony.com/doc/current/security/remember_me.html
-
-                                <div class="checkbox mb-3">
-                                    <label>
-                                        <input type="checkbox" name="_remember_me"> Remember me
-                                    </label>
-                                </div>
-                            #}
-
-                            <button class="btn btn-lg btn-primary" type="submit">
+                            <button class="btn btn-lg btn-primary" type="submit" id="login-submit">
                                 Sign in
                             </button>
                         </fieldset>
