@@ -15,40 +15,51 @@
 
     <div class="article-wrapper">
         <section class="p-t-30">
-            <div class="accordion" id="accordionExample">
-                {% for category in categories %}
-                    <div class="card cat-accordion">
-                        <div class="card-header" id="headingOne">
-                                <button class="btn btn-link catTitle" type="button" data-toggle="collapse" data-target="#cat-{{ category.id }}" aria-expanded="true" aria-controls="cat-{{ category.id }}" data-parent="#accordionExample">
-                                {{ category.name }}
-                                </button>
-                        </div>
-                        <div id="cat-{{ category.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="container">
-                                    <div class="row row-cols-2 row-cols-sm-1 row-cols-md-1">
-                                    {% for key, article in articles %}
-                                        {% if article.category == category %}
-                                                <div class="col-12 col-sm-6 col-md-6 articles cat-{{ article.category.id }}">
-                                                    <div class="card card-lg card-article">
-                                                        <div class="card-body">
-                                                            <div class="card-title col-10" >
-                                                                <h5><a href="{{ path('article_show', { id: article.id }) }}"><span id="name-{{ article.id }}" class="names">{{ article.name }}</span></a></h5>
-                                                            </div>
-                                                            <div class="card-text col-2">
-                                                                <input class="inputQty" id="input-{{ article.id }}" type="number" value="0" min="0"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+            <div class="category-section">
+                <label for="cat-select" id="cat-label">Catégorie</label>
+
+                <select name="categories" id="cat-select">
+                    <option value="-1" selected>Tous</option>
+                    {% for category in categories %}
+                        <option class="categories" value="{{ category.id }}" id="category-{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="container article-section">
+                <div class="row">
+                    {% for article in articles %}
+                        <div class="col-12 col-sm-6 col-md-4 articles cat-{{ article.category.id }}">
+                            <div class="card card-lg">
+                                <div class="card-img">
+                                    <a href="{{ path('article_show', { id: article.id }) }}">
+                                        {% if article.picture is not null %}
+                                            <img src="{{ asset('uploads/pictures/' ~ article.picture) }}" class="card-img-top" alt="{{ article.picture }}">
                                         {% endif %}
-                                    {% endfor %}
-                                    </div>
+                                    </a>
+                                </div>
+                                <div class="card-block">
+                                    <ul>
+                                        <li>
+                                            <a href="{{ path('article_show', { id: article.id }) }}">
+                                                {{ article.name }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            {{ article.description }}
+                                        </li>
+                                    </ul>
+                                    <hr/>
+                                    <ul>
+                                        <li>
+                                            Quantité : 
+                                            <input class="inputQty" id="input-{{ article.id }}" type="number" value="0" min="0"/>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
          
             <div class="container">
@@ -58,6 +69,7 @@
             </div>
         </section>
     </div>
+
 
     {# <!-- jQuery --> #}
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
@@ -74,18 +86,16 @@
 
     {# <!-- Filtre des articles --> #}
     <script type="text/javascript">
-        let categories = document.getElementsByClassName("categories");
         let articles = document.getElementsByClassName("articles");
         let names = document.getElementsByClassName("names");
-        for (let i = 0; i < categories.length; i++) {
-            categories[i].addEventListener("click", filterArticles);
-        }
+        let catSelection = document.getElementById("cat-select");
+        catSelection.addEventListener("change", filterArticles);
 
         function filterArticles(event) {
             event.preventDefault();
-            selectedCategory = event.target.id;
-            catId = parseInt(selectedCategory.substring(9));
+            let catId = parseInt(event.target.value);
             selectedArticles = document.getElementsByClassName("cat-" + catId);
+            console.log(selectedArticles);
             if (catId === -1) {
                 for (let i = 0; i < articles.length; i++) {
                     articles[i].hidden = false;

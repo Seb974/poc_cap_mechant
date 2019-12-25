@@ -116,7 +116,7 @@ class ArticleController extends AbstractController
 
         try {
             $picture->move(
-                $this->getParameter('pics_directory'),
+                $this->getParameter('pictures_directory'),
                 $newFilename
             );
         } catch (FileException $e) {

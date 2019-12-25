@@ -23,4 +23,20 @@ class HomeController extends AbstractController
             'categories' => $categories,
         ]);
     }
+
+    /**
+     * @Route("/guest", name="guest_home")
+     */
+    public function guestIndex(ArticleRepository $articleRepository, CategoryRepository $categoryRepository)
+    {
+        $categoryNameToHide = "Produits d'entretien - consommables";
+        $consommables = $categoryRepository->findOneBy(["name" => $categoryNameToHide]);
+        $categories = $categoryRepository->findCategoriesWithout($categoryNameToHide);
+        $articles = $articleRepository->findFromCategoriesWithout($consommables);
+
+        return $this->render('home/guest.html.twig', [
+            'articles' => $articles,
+            'categories' => $categories,
+        ]);
+    }
 }

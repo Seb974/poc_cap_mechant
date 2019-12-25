@@ -4584,6 +4584,7 @@ input[type="file"] {
   height: auto;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
+  padding:1px;
 }
 
 .card .card-block {

@@ -34,9 +34,9 @@ class ArticleType extends AbstractType
             ])
             ->add('picture', FileType::class, [
                 'label' => 'Illustration',
+                'attr' => ['placeholder' => 'Sélectionnez une image'],
                 'required' => false,
                 'mapped' => false,
-                'attr' => ['class' => 'form-control form-control-secondary'],
                 'constraints' => [
                     new File([
                         'maxSize' => '5242880',
