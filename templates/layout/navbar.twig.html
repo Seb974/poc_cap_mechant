@@ -18,8 +18,11 @@
                                     </a>
                                    <div class="dropdown-menu dropdown-menu-right">
                                         {% if is_granted('ROLE_ADMIN') %}
+                                            <a class="dropdown-item" href="{{ path('guest_home') }}">
+                                                <i class="fas fa-user-secret"></i></i>Vue client</a>
+                                            <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="{{ path('user_index') }}">
-                                                <i class="fas fa-users"></i>Users</a>
+                                                <i class="fas fa-users"></i>Utilisateurs</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="{{ path('article_index') }}">
                                                 <i class="fas fa-utensils"></i>Articles</a>
