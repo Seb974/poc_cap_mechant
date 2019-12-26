@@ -16,41 +16,44 @@
     <div class="article-wrapper">
         <section class="p-t-30">
             <div class="category-section">
-                <label for="cat-select" id="cat-label">Catégorie</label>
-
-                <select name="categories" id="cat-select">
-                    <option value="-1" selected>Tous</option>
-                    {% for category in categories %}
-                        <option class="categories" value="{{ category.id }}" id="category-{{ category.id }}">{{ category.name }}</option>
-                    {% endfor %}
-                </select>
+                <div class="category-select">
+                    {# <label for="cat-select" id="cat-label">Catégorie</label> #}
+                    <select name="categories" id="cat-select">
+                        <option value="-1" selected>Tous les produits</option>
+                        {% for category in categories %}
+                            <option class="categories" value="{{ category.id }}" id="category-{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="card-adder-button">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="guestSubmitButton">
+                        <i class="fas fa-shopping-cart"></i> Ajouter
+                    </button>
+                </div>
             </div>
             <div class="container article-section">
                 <div class="row">
                     {% for article in articles %}
                         <div class="col-12 col-sm-6 col-md-4 articles cat-{{ article.category.id }}">
-                            <div class="card card-lg">
+                            <div class="card card-lg guest-card">
                                 <div class="card-img">
-                                    <a href="{{ path('article_show', { id: article.id }) }}">
                                         {% if article.picture is not null %}
                                             <img src="{{ asset('uploads/pictures/' ~ article.picture) }}" class="card-img-top" alt="{{ article.picture }}">
                                         {% endif %}
-                                    </a>
                                 </div>
                                 <div class="card-block">
                                     <ul>
                                         <li>
-                                            <a href="{{ path('article_show', { id: article.id }) }}">
-                                                {{ article.name }}
-                                            </a>
+                                            <strong><span id="name-{{ article.id }}" class="names">{{ article.name }}</span></strong>
                                         </li>
+                                        <hr/>
                                         <li>
                                             {{ article.description }}
                                         </li>
                                     </ul>
                                     <hr/>
                                     <ul>
-                                        <li>
+                                        <li class="item-quantity">
                                             Quantité : 
                                             <input class="inputQty" id="input-{{ article.id }}" type="number" value="0" min="0"/>
                                         </li>
@@ -62,27 +65,17 @@
                 </div>
             </div>
          
-            <div class="container">
+            {# <div class="container">
                 <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton">
                     <i class="fas fa-shopping-cart"></i> Ajouter
                 </button>
-            </div>
+            </div> #}
         </section>
     </div>
 
 
     {# <!-- jQuery --> #}
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-    
-    {# <!-- Gestion du collapse --> #}
-    <script type="text/javascript">
-        $(function () {
-            let articleCategories = $('#accordionExample');
-            articleCategories.on('show.bs.collapse','.collapse', function() {
-                articleCategories.find('.collapse.in').collapse('hide');
-            });
-        });
-    </script>
 
     {# <!-- Filtre des articles --> #}
     <script type="text/javascript">
@@ -114,7 +107,7 @@
     {#<!-- Gestion du panier -->#}
     <script type="text/javascript">
         let count = 0;
-        let button = document.getElementById("submitButton");
+        let button = document.getElementById("guestSubmitButton");
         let inputs = document.getElementsByClassName("inputQty");
         let cartList = document.getElementById("cartList");
         let totalItems = document.getElementById("itemCount");
@@ -134,6 +127,7 @@
             event.preventDefault();
             for (let i = 0; i < inputs.length; i++) {
                 let qty = parseInt(inputs[i].value);
+                console.log(qty);
                 if (qty > 0) {
                     let id = parseInt(inputs[i].id.substring(6));
                     let inputItem = document.getElementById("itemQty-" + id);
