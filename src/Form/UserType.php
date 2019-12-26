@@ -59,7 +59,8 @@ class UserType extends AbstractType
             ])
             ->add('roles', ChoiceType::class, [
                 'choices'  => [
-                    'Utilisateur' => 'ROLE_USER',
+                    'Client externe' => 'ROLE_GUEST',
+                    'Utilisateur interne' => 'ROLE_USER',
                     'Administrateur' => 'ROLE_ADMIN'
                 ],
                 'data' => $options['roles'],

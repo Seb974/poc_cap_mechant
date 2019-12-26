@@ -43,8 +43,8 @@ class UserController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $form->get('roles')->getData() === "ROLE_ADMIN" ? $user->setRoles(["ROLE_ADMIN"]) : $user->setRoles(["ROLE_USER"]);
-
+            //$form->get('roles')->getData() === "ROLE_ADMIN" ? $user->setRoles(["ROLE_ADMIN"]) : $user->setRoles(["ROLE_USER"]);
+            $user->setRoles([ $form->get('roles')->getData() ]);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -79,8 +79,8 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $form->get('roles')->getData() === "ROLE_ADMIN" ? $user->setRoles(["ROLE_ADMIN"]) : $user->setRoles(["ROLE_USER"]);
-
+            //$form->get('roles')->getData() === "ROLE_ADMIN" ? $user->setRoles(["ROLE_ADMIN"]) : $user->setRoles(["ROLE_USER"]);
+            $user->setRoles([ $form->get('roles')->getData() ]);
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('user_index');
         }

@@ -24,6 +24,8 @@
                 {# <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
                 {% if "ROLE_ADMIN" in user.roles %}
                     <td>Administrateur</td>
+                {% elseif "ROLE_GUEST" in user.roles %}
+                    <td>Client</td>
                 {% else %}
                     <td>Utilisateur</td>
                 {% endif %}
